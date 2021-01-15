@@ -17,9 +17,8 @@ try {
 
 module.exports = {
   siteMetadata: {
-    title: 'GCN',
-    description:
-      'A starter template to build amazing static websites with Gatsby, Contentful and Netlify',
+    title: 'Morgan State Graduate Programs',
+    description: "Explore Morgan State's diverse graduate programs",
     siteUrl: 'https://gcn.netlify.com',
     image: '/images/share.jpg',
     menuLinks: [
@@ -32,7 +31,7 @@ module.exports = {
         slug: '/about/',
       },
       {
-        name: 'Contact',
+        name: 'Start Here',
         slug: '/contact/',
       },
     ],
