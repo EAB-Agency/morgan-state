@@ -8,7 +8,7 @@ import TagList from '../components/TagList'
 import PostLinks from '../components/PostLinks'
 import SEO from '../components/SEO'
 
-const PostTemplate = ({ data, pageContext }) => {
+const ProgramTemplate = ({ data, pageContext }) => {
   const {
     title,
     metaDescription,
@@ -87,4 +87,4 @@ export const query = graphql`
   }
 `
 
-export default PostTemplate
+export default ProgramTemplate

@@ -1,4 +1,4 @@
-### Type definitions saved at 2020-01-25T02:26:44.337Z ###
+### Type definitions saved at 2021-01-15T07:06:24.608Z ###
 
 type File implements Node @dontInfer {
   sourceInstanceName: String!
@@ -68,7 +68,41 @@ type Directory implements Node @dontInfer {
   birthtimeMs: Float @deprecated(reason: "Use `birthTime` instead")
 }
 
+type Site implements Node @dontInfer {
+  buildTime: Date @dateformat
+  siteMetadata: SiteSiteMetadata
+  port: Int
+  host: String
+  polyfill: Boolean
+  pathPrefix: String
+}
+
+type SiteSiteMetadata @derivedTypes {
+  title: String
+  description: String
+  siteUrl: String
+  image: String
+  menuLinks: [SiteSiteMetadataMenuLinks]
+  postsPerFirstPage: Int
+  postsPerPage: Int
+  basePath: String
+}
+
+type SiteSiteMetadataMenuLinks {
+  name: String
+  slug: String
+}
+
+type SitePage implements Node @dontInfer {
+  path: String!
+  component: String!
+  internalComponentName: String!
+  componentChunkName: String!
+  matchPath: String
+}
+
 type MarkdownHeading {
+  id: String
   value: String
   depth: Int
 }
@@ -94,7 +128,7 @@ type MarkdownWordCount {
   words: Int
 }
 
-type MarkdownRemark implements Node @childOf(mimeTypes: [], types: ["contentfulPostBodyTextNode", "contentfulPostMetaDescriptionTextNode", "contentfulPageBodyTextNode", "contentfulPageMetaDescriptionTextNode"], many: false) @derivedTypes @dontInfer {
+type MarkdownRemark implements Node @childOf(mimeTypes: [], types: ["contentfulPostBodyTextNode", "contentfulPostMetaDescriptionTextNode", "contentfulPageBodyTextNode", "contentfulPageMetaDescriptionTextNode"], many: false) @dontInfer {
   frontmatter: MarkdownRemarkFrontmatter
   excerpt: String
   rawMarkdownBody: String
@@ -120,7 +154,7 @@ type contentfulPostMetaDescriptionTextNode implements Node @childOf(mimeTypes: [
   metaDescription: String
 }
 
-type ContentfulTag implements Node @derivedTypes @dontInfer {
+type ContentfulTag implements Node @dontInfer {
   title: String
   slug: String
   post: [ContentfulPost] @link(by: "id", from: "post___NODE")
@@ -132,7 +166,7 @@ type ContentfulTag implements Node @derivedTypes @dontInfer {
   node_locale: String
 }
 
-type ContentfulPost implements Node @derivedTypes @dontInfer {
+type ContentfulPost implements Node @dontInfer {
   title: String
   slug: String
   publishDate: Date @dateformat
@@ -148,7 +182,7 @@ type ContentfulPost implements Node @derivedTypes @dontInfer {
   metaDescription: contentfulPostMetaDescriptionTextNode @link(by: "id", from: "metaDescription___NODE")
 }
 
-type ContentfulAsset implements Node @derivedTypes @dontInfer {
+type ContentfulAsset implements Node @dontInfer {
   contentful_id: String
   file: ContentfulAssetFile
   title: String
@@ -156,14 +190,14 @@ type ContentfulAsset implements Node @derivedTypes @dontInfer {
   node_locale: String
 }
 
-type ContentfulAssetFile @derivedTypes {
+type ContentfulAssetFile {
   url: String
   details: ContentfulAssetFileDetails
   fileName: String
   contentType: String
 }
 
-type ContentfulAssetFileDetails @derivedTypes {
+type ContentfulAssetFileDetails {
   size: Int
   image: ContentfulAssetFileDetailsImage
 }
@@ -173,12 +207,12 @@ type ContentfulAssetFileDetailsImage {
   height: Int
 }
 
-type ContentfulPostSys @derivedTypes {
+type ContentfulPostSys {
   revision: Int
   contentType: ContentfulPostSysContentType
 }
 
-type ContentfulPostSysContentType @derivedTypes {
+type ContentfulPostSysContentType {
   sys: ContentfulPostSysContentTypeSys
 }
 
@@ -189,12 +223,12 @@ type ContentfulPostSysContentTypeSys {
   contentful_id: String
 }
 
-type ContentfulTagSys @derivedTypes {
+type ContentfulTagSys {
   revision: Int
   contentType: ContentfulTagSysContentType
 }
 
-type ContentfulTagSysContentType @derivedTypes {
+type ContentfulTagSysContentType {
   sys: ContentfulTagSysContentTypeSys
 }
 
@@ -205,7 +239,7 @@ type ContentfulTagSysContentTypeSys {
   contentful_id: String
 }
 
-type ContentfulPage implements Node @derivedTypes @dontInfer {
+type ContentfulPage implements Node @dontInfer {
   title: String
   slug: String
   body: contentfulPageBodyTextNode @link(by: "id", from: "body___NODE")
@@ -218,12 +252,12 @@ type ContentfulPage implements Node @derivedTypes @dontInfer {
   node_locale: String
 }
 
-type ContentfulPageSys @derivedTypes {
+type ContentfulPageSys {
   revision: Int
   contentType: ContentfulPageSysContentType
 }
 
-type ContentfulPageSysContentType @derivedTypes {
+type ContentfulPageSysContentType {
   sys: ContentfulPageSysContentTypeSys
 }
 
@@ -238,4 +272,93 @@ type ContentfulContentType implements Node @dontInfer {
   name: String
   displayField: String
   description: String
+}
+
+type contentfulProgramsDescriptionRichTextNode implements Node @derivedTypes @childOf(types: ["ContentfulPrograms"]) @dontInfer {
+  content: [contentfulProgramsDescriptionRichTextNodeContent]
+  nodeType: String
+  description: String
+  sys: contentfulProgramsDescriptionRichTextNodeSys
+}
+
+type contentfulProgramsDescriptionRichTextNodeContent @derivedTypes {
+  content: [contentfulProgramsDescriptionRichTextNodeContentContent]
+  nodeType: String
+}
+
+type contentfulProgramsDescriptionRichTextNodeContentContent @derivedTypes {
+  marks: [contentfulProgramsDescriptionRichTextNodeContentContentMarks]
+  value: String
+  nodeType: String
+}
+
+type contentfulProgramsDescriptionRichTextNodeContentContentMarks {
+  type: String
+}
+
+type contentfulProgramsDescriptionRichTextNodeSys {
+  type: String
+}
+
+type ContentfulPrograms implements Node @derivedTypes @dontInfer {
+  degreeName: String
+  slug: String
+  creditHours: Int
+  partner: ContentfulPartner @link(by: "id", from: "partner___NODE")
+  heroImage: ContentfulAsset @link(by: "id", from: "heroImage___NODE")
+  description: contentfulProgramsDescriptionRichTextNode @link(by: "id", from: "description___NODE")
+  spaceId: String
+  contentful_id: String
+  createdAt: Date @dateformat
+  updatedAt: Date @dateformat
+  sys: ContentfulProgramsSys
+  node_locale: String
+}
+
+type ContentfulPartner implements Node @derivedTypes @dontInfer {
+  name: String
+  schoolId: Int
+  url: String
+  logo: ContentfulAsset @link(by: "id", from: "logo___NODE")
+  programs: [ContentfulPrograms] @link(by: "id", from: "programs___NODE")
+  spaceId: String
+  contentful_id: String
+  createdAt: Date @dateformat
+  updatedAt: Date @dateformat
+  sys: ContentfulPartnerSys
+  node_locale: String
+}
+
+type ContentfulPartnerSys @derivedTypes {
+  type: String
+  revision: Int
+  contentType: ContentfulPartnerSysContentType
+}
+
+type ContentfulPartnerSysContentType @derivedTypes {
+  sys: ContentfulPartnerSysContentTypeSys
+}
+
+type ContentfulPartnerSysContentTypeSys {
+  type: String
+  linkType: String
+  id: String
+  contentful_id: String
+}
+
+type ContentfulProgramsSys @derivedTypes {
+  type: String
+  revision: Int
+  contentType: ContentfulProgramsSysContentType
+}
+
+type ContentfulProgramsSysContentType @derivedTypes {
+  sys: ContentfulProgramsSysContentTypeSys
+}
+
+type ContentfulProgramsSysContentTypeSys {
+  type: String
+  linkType: String
+  id: String
+  contentful_id: String
 }
