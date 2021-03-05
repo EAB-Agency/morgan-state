@@ -26,14 +26,6 @@ module.exports = {
         name: 'Home',
         slug: '/',
       },
-      {
-        name: 'About',
-        slug: '/about/',
-      },
-      {
-        name: 'Start Here',
-        slug: '/contact/',
-      },
     ],
     postsPerFirstPage: 7,
     postsPerPage: 6,
