@@ -30,4 +30,13 @@ module.exports.data = {
       }
     }
   }`,
+  programs: `{
+    allContentfulProgram {
+      edges {
+        node {
+          slug
+        }
+      }
+    }
+  }`,
 }

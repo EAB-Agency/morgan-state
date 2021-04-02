@@ -1,0 +1,386 @@
+// ////////////////////////////
+// //NAV
+// //////////////////////////
+
+// // =======================
+// // Nav desktop
+
+// @include keyframes(currentnav){
+// 	0% {bottom: 0.7em; opacity: 0;}
+// 	100% {bottom: 0.2em; opacity: 1;}
+// }
+
+// nav[role=navigation] {
+// 	display: block;
+// 	padding: 0 1em;
+
+// 	ul {
+// 		display: none;
+// 		list-style: none;
+// 		margin: 0;
+// 		padding-left: 0;
+
+// 		@media(min-width: $nav-breakpoint){
+// 			display: flex;
+// 			align-items: center;
+// 			justify-content: flex-end;
+// 		}
+
+// 		li{
+// 			margin-right: 0.5em;
+// 			margin-bottom: 0;
+
+// 			&:last-child{
+// 				margin: 0;
+// 			}
+
+// 			a{
+// 				display: flex;
+// 				flex-direction: column;
+// 				justify-content: center;
+// 				position: relative;
+// 				text-align: center;
+// 				text-decoration: none;
+// 				color: $c-darkgrey;
+// 				padding: 0 0.5em;
+// 				font-family: $f-sans;
+// 				font-weight: 500;
+// 				font-size: 0.9rem;
+// 				line-height: 1;
+// 				height: 3em;
+// 				transition: color 0.2s, height 0.2s;
+
+// 				&::after{
+// 					content: "";
+// 					display: none;
+// 					width: 40%;
+// 					border-top: 1px solid $c-blue;
+// 					position: absolute;
+// 					bottom: 0.2em;
+// 					left: 50%;
+// 					transform: translateX(-50%);
+// 				}
+
+// 				&:hover, &:focus{
+// 					color: $c-blue;
+
+// 					&::after{
+// 						display: block;
+// 						@include animation(currentnav 0.3s ease forwards);
+// 					}
+// 				}
+
+// 				&[aria-current] {
+// 					color: $c-blue;
+
+// 					&::after{
+// 						display: block;
+// 					}
+
+// 				}
+// 			}
+
+// 			button{
+// 				margin: 0;
+// 			}
+// 		}
+
+// 		// ==============================
+// 		// Submenu styles (dropdown)
+
+// 		ul{
+// 			background: lighten($c-purple,40%);
+// 			float: left;
+// 			position: absolute;
+// 			min-width: 10em;
+// 			top: 3.3em;
+// 			left: -999em;
+// 			z-index: 99999;
+// 			border-bottom-left-radius: 1em;
+// 			border-bottom-right-radius: 1em;
+// 			overflow: hidden;
+
+// 			li{
+// 				margin: 0;
+// 				a{
+// 					height: initial;
+// 					text-transform: initial;
+// 					padding: 1em 1em;
+// 					text-align: left;
+// 					font-size: 0.9rem;
+// 					transition: all 0.2s;
+
+// 					&::after{
+// 						display: none !important;
+// 						position: absolute;
+// 						left: 0;
+// 						width: 100%;
+// 						border-color:  rgba(white, 0);
+// 						bottom: 0 !important;
+// 					}
+
+// 					&:hover, &:focus{
+// 						background: lighten($c-purple, 43%);
+// 						&::after{
+// 							border-color: $c-purple;
+// 						}
+// 					}
+// 				}
+
+// 				&:hover > ul,
+// 				&.focus > ul{
+// 					left: auto;
+// 				}
+// 			}
+
+// 			ul {
+// 				left: -999em;
+// 				top: 0;
+// 			}
+
+// 		}
+
+// 	}
+
+// }
+
+// // .sticked-shadow{
+// // 	ul li {
+
+// // 		a {
+// // 			height: 3em !important;
+// // 		}
+
+// // 		ul{
+// // 			top: 2.5em !important;
+// // 		}
+// // 	}
+// // }
+
+// // End Nav Desktop
+// // =================================
+
+// // ********************************************************************
+
+// // =================================
+// // Nav Mobile
+
+// @media(max-width: $nav-breakpoint){
+
+// 	nav[role="navigation"]{
+// 		width: 100%;
+// 		padding: 0;
+
+// 		.show-nav &{
+// 			height: 100vh;
+// 			overflow-y: scroll;
+// 			background: $c-darkgrey;
+// 			padding-top: 4em;
+// 			display: flex;
+// 			flex-direction: column;
+// 			position: fixed;
+// 			z-index: 9;
+// 			width: 100vw;
+// 			top: 0;
+// 			left: 0;
+
+// 			@include keyframes(showNav){
+// 				0% {top:-3em; opacity: 0;}
+// 				100% {top:0; opacity: 1;}
+// 			}
+// 			@include animation(showNav 0.2s ease-out forwards);
+
+// 		ul {
+// 			display: flex;
+// 				flex-direction: column;
+// 			li{
+// 				margin: 0 !important;
+// 				a{
+// 					font-size: 1rem;
+// 					color: white !important;
+// 					border-bottom: 1px solid rgba(white,0.2) !important;
+// 					height: auto;
+// 					padding: 1.3em 1.3em;
+// 					border-radius: 0 !important;
+// 					text-align: right;
+// 					font-weight: 500;
+
+// 					&::after{
+// 						display: none !important;
+// 					}
+
+// 					&:hover, &:focus{
+// 						background: darken($c-blue, 10%) !important;
+// 					}
+// 				}
+
+// 				&.current-menu-item,
+// 				&.current-page-parent,
+// 				&.current-menu-parent {
+// 					& > a{
+// 						color: white;
+
+// 						&::after{
+// 							content:"";
+// 							display: block !important;
+// 							width: 7rem;
+// 							border-top: 1px solid $c-red;
+// 							left: initial;
+// 							right: 0;
+// 							bottom: 0.5em;
+// 							transform: translateX(-1em);
+
+// 						}
+// 					}
+// 				}
+
+// 				button{
+// 					display: block;
+// 					width: 70%;
+// 					margin: 1.5em auto 0;
+// 				}
+
+// 			}
+
+// 			li.menu-item-has-children{
+// 				& > a{
+
+// 				}
+
+// 				ul.sub-menu{
+// 					display: block;
+// 					position: relative;
+// 					float: none;
+// 					width: 100%;
+// 					height: 0;
+// 					left: -9999em;
+// 					top: 100%;
+// 					border-radius: 0;
+
+// 					li{
+// 						a{
+// 							text-align: center;
+// 							padding: 1em;
+// 							background: lighten($c-purple, 40%) !important;
+// 							color: $c-blue !important;
+
+// 							&:hover, &:focus{
+// 								background: white !important;
+// 							}
+// 						}
+// 					}
+// 				}
+
+// 				&.clicked{
+// 					ul.sub-menu{
+// 						left: 0 !important;
+// 						height: auto !important;
+// 					}
+// 				}
+// 			}
+// 		}
+
+// 	}
+// }
+// }
+
+// .nav-toggle{ // Inherit Button styles. Edit to customize as wish.
+// 	display: block;
+// 	background: none;
+// 	color: $c-purple !important;
+// 	position: absolute;
+// 	z-index: 10;
+// 	right: 1.2em;
+// 	@include fluidRem(top,1rem,1.8rem);
+// 	text-indent: -999em;
+// 	width: 2em;
+// 	height: 1.2em;
+// 	margin: 0;
+// 	padding: 0;
+// 	background: none;
+// 	border: none;
+
+// 	// Hide the nav-toggle(Hamburguer) in desktop above $nav-breakpoint.
+// 	@media (min-width: $nav-breakpoint) {
+// 		display: none;
+// 	}
+
+// 	// ===========================
+// 	// Hamburguer
+
+// 	.burger-line{
+// 		display: block;
+// 		width: 100%;
+// 		height: 3px;
+// 		background:$c-blue;
+// 		position: absolute;
+// 		left: 0;
+// 		border-radius: 0.6em;
+// 		transition: all 0.2s;
+
+// 		&:nth-child(1){
+// 			top: 0;
+// 		}
+
+// 		&:nth-child(2){
+// 			top: 47%;
+// 			transform:translateY(-50%);
+// 		}
+
+// 		&:nth-child(3){
+// 			bottom: 0;
+// 		}
+// 	}
+
+// 	&:hover{
+// 		background: none;
+
+// 		@media(min-width: $mq-800){
+// 			.burger-line{
+// 				&:nth-child(1){
+// 					top: 0.2em;
+// 				}
+// 				&:nth-child(3){
+// 					bottom: 0.2em;
+// 				}
+// 			}
+
+// 		}
+// 	}
+
+// 	&:focus,
+// 	&:active{
+// 		background: none;
+// 	}
+
+// 	.show-nav &{
+// 		width: 2em;
+// 		height: 2em;
+
+// 		.burger-line{
+// 			background: white;
+
+// 			&:nth-child(1){
+// 				top: 40%;
+// 				left: 0;
+// 				transform:translateY(-50%)rotate(45deg);
+// 			}
+
+// 			&:nth-child(2){
+// 				opacity: 0;
+// 				transition: all 0s;
+// 			}
+
+// 			&:nth-child(3){
+// 				top: 40%;
+// 				left: 0;
+// 				bottom: initial;
+// 				transform:translateY(-50%)rotate(-45deg);
+// 			}
+// 		}
+// 	}
+
+// 	// End hamburguer
+// 	// =============================
+
+// }

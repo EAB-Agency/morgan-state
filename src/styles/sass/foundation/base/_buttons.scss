@@ -1,0 +1,39 @@
+////////////////////
+//BUTTONS
+////////////////////
+
+.button,
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  @include buttons($c-cta);
+}
+
+%minor-button {
+  @include buttons($c-cta);
+}
+
+a {
+  color: $c-links;
+  transition: all 0.2s;
+
+  &:hover {
+    color: $c-ctahover;
+    text-decoration: none;
+    outline: none;
+  }
+
+  &:hover,
+  &:active {
+    outline: none;
+  }
+}
+
+.extra-link {
+  display: block;
+  font-weight: 600;
+  position: relative;
+  font-size: 1rem;
+  margin: 0.5em 0;
+}

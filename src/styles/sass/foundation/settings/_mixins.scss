@@ -1,0 +1,261 @@
+///////////////////
+//MIXINS
+///////////////////
+
+////////////
+//Transitions
+////////////
+@mixin single-transition(
+  $property: $default-transition-property,
+  $duration: $default-transition-duration,
+  $function: $default-transition-function,
+  $delay: $default-transition-delay
+) {
+  @include transition(compact($property $duration $function $delay));
+}
+
+///////////////
+//Animations
+//////////////
+@mixin animation($animate...) {
+  $max: length($animate);
+  $animations: "";
+
+  @for $i from 1 through $max {
+    $animations: #{$animations + nth($animate, $i)};
+
+    @if $i < $max {
+      $animations: #{$animations + ", "};
+    }
+  }
+  -webkit-animation: $animations;
+  -moz-animation: $animations;
+  -o-animation: $animations;
+  animation: $animations;
+}
+
+@mixin keyframes($animationName) {
+  @-webkit-keyframes #{$animationName} {
+    @content;
+  }
+  @-moz-keyframes #{$animationName} {
+    @content;
+  }
+  @-o-keyframes #{$animationName} {
+    @content;
+  }
+  @keyframes #{$animationName} {
+    @content;
+  }
+}
+
+//////////////////////////////////////////////////////
+// Buttons
+//////////////////////////////////////////////////////
+
+@mixin buttons(
+  $primary-color: black,
+  $text-color: white,
+  $border-color: $primary-color,
+  $icon-color: white
+) {
+  display: block;
+  width: 100%;
+  position: relative;
+  background: $primary-color;
+  color: $text-color;
+  text-decoration: none;
+  padding: 0.85em 2em 0.85em 1.1em;
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: $f-sans;
+  text-align: center;
+  border: 1px solid $border-color;
+  margin: 0.5em auto;
+  line-height: 1;
+  transition: all 0.2s;
+  cursor: pointer;
+  outline: none;
+
+  @media (min-width: $mq-600) {
+    display: inline-block;
+    width: auto;
+  }
+
+  &:hover,
+  &:focus {
+    cursor: pointer;
+    background: darken($primary-color, 15%);
+    color: $text-color;
+    // @include arrownav($icon-color);
+  }
+
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 0.6em;
+    height: 0.6em;
+    border-right: 3px solid $icon-color;
+    border-top: 3px solid $icon-color;
+    right: 0.8em;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    transition: all 0.2s;
+  }
+}
+
+@mixin arrownav($icon-color) {
+  &::after {
+    // content: $i-arrow;
+    // font-family: $f-icons;
+    // color: $icon-color !important;
+    content: "";
+    display: block;
+    position: absolute;
+    width: 1.5em;
+    height: 1.5em;
+    border-right: 2px solid $icon-color;
+    border-bottom: 2px solid $icon-color;
+    right: 0.8em;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    // @include transform(translateY(-50%));
+    // font-size: 1.5em;
+    // font-weight: normal;
+    // line-height: 0;
+    transition: all 0.2s;
+  }
+}
+
+// ===========================
+// @font-face Declaration
+// ===========================
+$x-fontFix: 0;
+@mixin fontFace(
+  $_p-file-name,
+  $_f-font-family: $_file-name,
+  $_f-font-weight: normal,
+  $_f-font-style: normal
+) {
+  //
+  // Chrome font fix
+  ////
+  // If the font fix styles haven't been applied yet, write styles
+  @if ($x-fontFix == 0) {
+    $x-fontFix: 1;
+    body {
+      -webkit-animation-delay: 0.1s;
+      -webkit-animation-name: fontfix;
+      -webkit-animation-duration: 0.1s;
+      -webkit-animation-iteration-count: 1;
+      -webkit-animation-timing-function: linear;
+    }
+    @-webkit-keyframes fontfix {
+      from {
+        opacity: 1;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  }
+
+  @font-face {
+    font-family: "#{$_f-font-family}";
+    src: url("#{$_p-file-name}.woff") format("woff"),
+      url("#{$_p-file-name}.ttf") format("truetype");
+    font-weight: $_f-font-weight;
+    font-style: $_f-font-style;
+  }
+}
+
+// ================
+// Fluid Sizes
+
+@mixin fluidRem(
+  $_x-prop,
+  $_d-minRem,
+  $_d-maxRem,
+  $_important: 0,
+  $_mq-min: $mq-300,
+  $_mq-max: $mq-1200
+) {
+  ////// Description:
+  // - mixin to fluidly scale a property from a minimum to a maximum size, within a range of viewport sizes
+  // - don't use this mixin on the <html> element; this can cause unexpected side effects
+  ////
+
+  ////// @param $_d-minRem
+  // - the smallest size that the property should be
+  // - must be a REM value
+  // - REQUIRED parameter
+  ////
+
+  ////// @param $_d-maxRem
+  // - the largest size that the property should be
+  // - must be a REM value
+  // - REQUIRED parameter
+  ////
+
+  ////// @param $_mq-min
+  // - the viewport size at which the property should begin growing
+  // - must be a REM value
+  ////
+
+  ////// @param $_mq-max
+  // - the viewport size at which the property should stop growing
+  // - must be a REM value
+  ////
+
+  $_d-mid: "";
+  $_importantx: "";
+
+  @for $_x-i from 1 through length($_d-maxRem) {
+    $_d-iMin: nth($_d-minRem, $_x-i);
+    $_d-iMax: nth($_d-maxRem, $_x-i);
+
+    @if $_d-iMin == 0 {
+      $_d-iMin: 0rem;
+    }
+
+    @if $_d-iMax == 0 {
+      $_d-iMax: 0rem;
+    }
+
+    $_d-iMid: calc(
+      #{$_d-iMin} +
+        #{($_d-iMax - $_d-iMin) /
+        1rem} *
+        ((100vw - #{$_mq-min}) / #{($_mq-max - $_mq-min) / 1rem})
+    );
+
+    @if ($_x-i > 1) {
+      $_d-mid: $_d-mid + " ";
+    }
+
+    $_d-mid: $_d-mid + $_d-iMid;
+  }
+
+  @if ($_important == 1) {
+    #{$_x-prop}: #{$_d-minRem} !important;
+
+    @media (min-width: #{$_mq-min}) {
+      #{$_x-prop}: #{$_d-mid} !important;
+    }
+
+    @media (min-width: #{$_mq-max}) {
+      #{$_x-prop}: #{$_d-maxRem} !important;
+    }
+  } @else {
+    #{$_x-prop}: #{$_d-minRem};
+
+    @media (min-width: #{$_mq-min}) {
+      #{$_x-prop}: #{$_d-mid};
+    }
+
+    @media (min-width: #{$_mq-max}) {
+      #{$_x-prop}: #{$_d-maxRem};
+    }
+  }
+}

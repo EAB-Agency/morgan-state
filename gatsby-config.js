@@ -35,6 +35,7 @@ module.exports = {
     `gatsby-plugin-emotion`,
     'gatsby-plugin-theme-ui',
     'gatsby-plugin-react-helmet',
+    'gatsby-plugin-sass',
     {
       resolve: `gatsby-transformer-remark`,
       options: {

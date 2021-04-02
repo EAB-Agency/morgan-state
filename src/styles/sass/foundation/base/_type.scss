@@ -1,0 +1,239 @@
+/////////////////////
+//TYPOGRAPHY
+/////////////////////
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*::selection {
+  background: $c-selection;
+}
+
+body,
+button,
+input,
+select,
+optgroup,
+textarea {
+  color: $c-basecopyblack;
+  font-family: $f-sans;
+  font-size: 16px;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  clear: both;
+}
+
+h1 {
+  font-family: $f-sans-condensed;
+  @include fluidRem("font-size", 1.5rem, 3rem);
+}
+
+h2 {
+  font-family: $f-sans-condensed;
+  font-weight: normal;
+  line-height: 1.1;
+  @include fluidRem("font-size", 1.2rem, 2rem);
+  strong {
+    font-weight: bold;
+  }
+}
+
+h3 {
+  font-family: $f-sans-condensed;
+  @include fluidRem("font-size", 1.5rem, 2.5rem);
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+h4 {
+  font-family: $f-sans-condensed;
+  @include fluidRem(font-size, 1rem, 1.5rem);
+  margin-bottom: 0.5em;
+}
+
+h5 {
+  font-family: $f-sans-condensed;
+  @include fluidRem(font-size, 1rem, 1.25rem);
+  line-height: 1.2;
+}
+
+h6 {
+  // @include fluidRem(1, 0.9);
+  // color: $c-blue;
+}
+
+p,
+ul,
+ol,
+blockquote,
+address {
+  font-family: $f-copyblocks;
+  margin: 0 0 1.5em;
+  // font-size: 1rem;
+  @include fluidRem(font-size, 0.95rem, 1.125rem);
+  color: $c-basecopyblack;
+}
+
+p:last-child {
+  margin: 0;
+}
+
+p.featured {
+  @include fluidRem(font-size, 1rem, 1.5rem);
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  li {
+    padding-left: 1em;
+    position: relative;
+    &::before {
+      content: "";
+      display: block;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: $c-darkgrey;
+      position: absolute;
+      left: 0.3em;
+      top: 0.7em;
+    }
+  }
+}
+
+ul,
+ol {
+  li {
+    margin-bottom: 0.5em;
+  }
+
+  &[class*="menu"],
+  &.extra-info-links {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    li {
+      margin: 0;
+    }
+  }
+
+  &.no-list {
+    list-style: none;
+    padding: 0;
+
+    li {
+      padding: 0;
+      &::before {
+        display: none;
+      }
+    }
+  }
+}
+
+dfn,
+cite,
+em,
+i {
+  font-style: italic;
+}
+
+pre {
+  background: #eee;
+  font-family: "Courier 10 Pitch", Courier, monospace;
+  font-size: 15px;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  margin-bottom: 1.6em;
+  max-width: 100%;
+  overflow: auto;
+  padding: 1.6em;
+}
+
+code,
+kbd,
+tt,
+var {
+  font-family: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+  font-size: 15px;
+  font-size: 0.9375rem;
+}
+
+abbr,
+acronym {
+  border-bottom: 1px dotted #666;
+  cursor: help;
+}
+
+mark,
+ins {
+  background: #fff9c0;
+  text-decoration: none;
+}
+
+big {
+  font-size: 125%;
+}
+
+small {
+  font-size: 0.85rem;
+}
+
+address {
+  font-style: normal;
+}
+
+dt {
+  font-weight: bold;
+}
+
+dd {
+  margin: 0 1.5em 1.5em;
+}
+
+img {
+  height: auto;
+  /* Make sure images are scaled correctly. */
+  max-width: 100%;
+  /* Adhere to container width. */
+}
+
+figure {
+  margin: 1em 0;
+  /* Extra wide images within figure tags don't overflow the content area. */
+}
+
+table {
+  margin: 0 0 1.5em;
+  width: 100%;
+}
+
+hr {
+  background-color: #ccc;
+  border: 0;
+  height: 1px;
+  margin-bottom: 1.5em;
+}
+
+.nobreak {
+  white-space: nowrap;
+}
+
+// Add styles for specific copy blocks
+// .copy-block{
+
+// }

@@ -1,0 +1,113 @@
+//! ==============
+//! MODALS
+//! ==============
+
+.ReactModal__Overlay--after-open {
+  background: rgba(black, 0.9) !important;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.modalClass {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: white;
+  @include fluidRem(padding, 3rem 1rem 1rem, 3rem 2rem 2rem);
+  border-top: 0.5em solid $c-red;
+  position: relative;
+  max-width: $mq-800;
+  outline: none;
+
+  // ! Start Preloader
+  // &::before {
+  //   content: "";
+  //   content: " ";
+  //   display: block;
+  //   position: absolute;
+  //   width: 64px;
+  //   height: 64px;
+  //   margin: 8px;
+  //   border-radius: 50%;
+  //   border: 6px solid #fff;
+  //   border-color: #fff transparent #fff transparent;
+  //   animation: lds-dual-ring 1.2s linear infinite;
+  // }
+  // @keyframes lds-dual-ring {
+  //   0% {
+  //     transform: rotate(0deg);
+  //   }
+  //   100% {
+  //     transform: rotate(360deg);
+  //   }
+  // }
+  //! -- End Preloader
+
+  // div {
+  //   position: relative;
+  //   z-index: 10;
+  // }
+
+  form {
+    display: block;
+    width: 100%;
+  }
+
+  button[class*="Button"] {
+    padding: 0.85em 2em 0.85em 1.1em;
+    @include buttons($c-cta);
+    border-radius: 0;
+  }
+}
+
+.close-btn {
+  display: block;
+  width: 2.5rem;
+  height: 2.5rem;
+  position: absolute;
+  top: 0em;
+  right: 0em;
+  text-indent: -999em;
+  margin: 0 0 0 auto;
+
+  &::before {
+    content: "+";
+    display: block;
+    font-family: $f-sans;
+    font-size: 3rem;
+    color: lighten(black, 50%);
+    font-weight: bold;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%) rotate(45deg);
+    line-height: 1;
+    text-indent: 0;
+  }
+
+  &:hover,
+  &:focus {
+    &::before {
+      color: $c-red;
+    }
+  }
+}
+
+.privacy,
+.contact,
+.help {
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  @media (max-width: $mq-700) {
+    padding-right: 1em;
+  }
+}
+
+.ReactModal__Body--open {
+  overflow-y: hidden;
+}

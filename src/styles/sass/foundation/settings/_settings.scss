@@ -1,0 +1,79 @@
+// ============================
+// ============================
+// Settings (fonts, colors, breakpoints, variables, etc)
+// ============================
+
+// ===========================
+// FONTS
+// ===========================
+//! using gatsby-config.js to bring in google fonts
+// @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap');
+
+// @include fontFace("eab-sales-icons", "eab-sales-icons", normal, normal);
+
+// ===========================
+// VARIABLES
+// ===========================
+
+$f-serif: "Times", serif;
+$f-sans: "Lato", sans-serif;
+$f-sans-condensed: "Roboto Condensed", sans-serif;
+$f-sans-slab: "Roboto Slab", serif;
+$f-icons: "icomoon", sans-serif;
+
+$f-copyblocks: $f-sans;
+
+// ===========================
+// ICONS
+// ===========================
+
+// ===========================
+// COLORS
+// ===========================
+
+$c-red: #c10202;
+$c-gray: #51575c;
+$c-darkgrey: #30363a;
+
+// Social colors
+$c-facebook: #3b5998;
+$c-twitter: #0084b4;
+$c-linkedin: #007bb6;
+
+// Base theme colours
+$c-selection: lighten(
+  $c-red,
+  45%
+); // Change it to a contrast color per branding guidelines.
+$c-basecopyblack: darken(
+  $c-darkgrey,
+  10%
+); // Base color for all copy blocks and regular text.
+$c-links: $c-red; // Base color for all links.
+$c-cta: $c-red; // Base color for all CTAs
+$c-ctahover: darken($c-red, 20%);
+
+// ===========================
+// BREAKPOINTS
+// ===========================
+$mq-1600: 100rem; // 1600px
+$mq-1440: 90rem; // 1400px
+$mq-1300: 81.25rem; // 1300px
+$mq-1200: 75rem; // 1200px
+$mq-1100: 68.75rem; // 1000px
+$mq-1000: 62.5rem; // 1000px
+$mq-900: 56.25rem; // 900px
+$mq-800: 50rem; // 800px
+$mq-700: 43.75rem; // 700px
+$mq-600: 37.5rem; // 600px
+$mq-500: 31.25rem; // 480px
+$mq-300: 18.75rem; // 320px
+
+$nav-breakpoint: $mq-1200; // Set breakpoint to change Desktop Nav to Mobile Nav.
+
+// ===========================
+// SPECIFIC VARIABLES
+// ===========================
+
+$vcol-buffer: 4.375em;

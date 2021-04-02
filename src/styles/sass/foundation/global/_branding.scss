@@ -1,0 +1,23 @@
+//////////////////////////////////
+//BRANDING
+//////////////////////////////////
+
+.logo {
+  display: block;
+  @include fluidRem(width, 5rem, 8rem);
+  @include fluidRem(height, 1.5rem, 3rem);
+  text-indent: -999em;
+  position: relative;
+
+  &::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: url(../../assets/unlv-logo.svg) no-repeat center;
+    background-size: contain;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}

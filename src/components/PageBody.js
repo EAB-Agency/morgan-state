@@ -97,11 +97,7 @@ const Body = styled.div`
 `
 
 const PageBody = props => {
-  return (
-    <Body
-      dangerouslySetInnerHTML={{ __html: props.body.childMarkdownRemark.html }}
-    />
-  )
+  return <Body>{props.children}</Body>
 }
 
 export default PageBody
