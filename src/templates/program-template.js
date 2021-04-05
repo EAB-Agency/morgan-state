@@ -11,6 +11,7 @@ import PageBody from '../components/PageBody'
 import TagList from '../components/TagList'
 import PostLinks from '../components/PostLinks'
 import SEO from '../components/SEO'
+import Card from '../components/Card'
 import CardList from '../components/CardList'
 import Testimonial from '../components/Testimonial'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
@@ -50,6 +51,9 @@ const FinancialAidOptions = styled.div`
 `
 const DiscoverProgramCTA = styled.div`
   background: lightskyblue;
+`
+const RelatedPrograms = styled.div`
+  background: lightsalmon;
 `
 const CareerDetails = styled.div`
   background: lightpink;
@@ -253,11 +257,13 @@ const ProgramTemplate = ({ data, pageContext }) => {
               nisi dapibus nulla sollicitudin.
             </p>
           </AchieveSuccess>
-          <Testimonial
-            image={testimonial.image}
-            quote={testimonial.quote}
-            author={testimonial.author}
-          ></Testimonial>
+          {testimonial && (
+            <Testimonial
+              image={testimonial.image}
+              quote={testimonial.quote}
+              author={testimonial.author}
+            ></Testimonial>
+          )}
           <FinancialAidOptions>
             {financialAidOptions &&
               documentToReactComponents(
@@ -272,6 +278,19 @@ const ProgramTemplate = ({ data, pageContext }) => {
             <p>Lorem ipsum dolor sit amet ac urna ullamcorper nisi.</p>
             <Button>Request Information</Button>
           </DiscoverProgramCTA>
+          <RelatedPrograms>
+            {console.log('relatedSchoolCollege', relatedSchoolCollege)}
+            {relatedSchoolCollege &&
+              relatedSchoolCollege.program.map(program => (
+                <Card
+                  key={program.id}
+                  slug={program.slug}
+                  heroImage={program.heroImage}
+                  title={program.fullProgramName}
+                  body={program.metaDescription.metaDescription}
+                />
+              ))}
+          </RelatedPrograms>
         </PageBody>
       </Container>
       <PostLinks
@@ -311,8 +330,17 @@ export const query = graphql`
         }
       }
       relatedSchoolCollege {
-        internal {
-          content
+        program {
+          slug
+          metaDescription {
+            metaDescription
+          }
+          heroImage {
+            fluid {
+              src
+            }
+          }
+          fullProgramName
         }
       }
       programDetailUrl
