@@ -314,8 +314,8 @@ export const query = graphql`
         json
       }
       heroImage {
-        fluid(maxWidth: 1180, background: "rgb:000000") {
-          ...GatsbyContentfulFluid_tracedSVG
+        fluid(maxWidth: 400) {
+          ...GatsbyContentfulFluid_withWebp_noBase64
         }
       }
       availableMethodsOfStudy
@@ -408,7 +408,7 @@ export const query = graphql`
         slug
         heroImage {
           fluid(maxWidth: 350, maxHeight: 196, resizingBehavior: SCALE) {
-            ...GatsbyContentfulFluid_tracedSVG
+            ...GatsbyContentfulFluid_withWebp_noBase64
           }
         }
       }
