@@ -51,7 +51,6 @@ const Author = styled.h4`
 `
 
 const Testimonial = ({ quote, author, image, ...props }) => {
-  console.log('quote, author, image', quote, author, image)
   return (
     <>
       {quote && (

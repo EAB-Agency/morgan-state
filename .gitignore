@@ -6,3 +6,6 @@ public/
 contentful-import-error-log*
 .env*
 .contentful.json
+
+# Local Netlify folder
+.netlify

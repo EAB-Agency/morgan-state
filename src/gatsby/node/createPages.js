@@ -42,8 +42,6 @@ module.exports = async ({ graphql, actions }) => {
         next,
       },
     })
-    console.log('-------------prev', prev)
-    console.log('-------------next', next)
   })
 
   // Create a page containing all "posts" and paginate.

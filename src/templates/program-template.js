@@ -226,8 +226,13 @@ const ProgramTemplate = ({ data, pageContext }) => {
                 RICHTEXT_OPTIONS
               )}
           </ResearchAndInternships>
+          {carouselContent &&
+            carouselContent.map(node => (
+              <CarouselContent key={node.id} {...node} />
+            ))}
+
           {/* https://brainhubeu.github.io/react-carousel/docs/gettingStarted */}
-          {carouselContent && (
+          {/* {carouselContent && (
             <Carousel
               plugins={[
                 'centered',
@@ -245,7 +250,7 @@ const ProgramTemplate = ({ data, pageContext }) => {
                 <CarouselContent key={node.id} {...node} />
               ))}
             </Carousel>
-          )}
+          )} */}
           <AchieveSuccess>
             <h2>Achieve Success Like Our Alumni</h2>
             <p>
@@ -279,7 +284,6 @@ const ProgramTemplate = ({ data, pageContext }) => {
             <Button>Request Information</Button>
           </DiscoverProgramCTA>
           <RelatedPrograms>
-            {console.log('relatedSchoolCollege', relatedSchoolCollege)}
             {relatedSchoolCollege &&
               relatedSchoolCollege.program.map(program => (
                 <Card
@@ -293,11 +297,11 @@ const ProgramTemplate = ({ data, pageContext }) => {
           </RelatedPrograms>
         </PageBody>
       </Container>
-      <PostLinks
+      {/* <PostLinks
         previous={previous}
         next={next}
         basePath={`${basePath}/program`}
-      />
+      /> */}
     </Layout>
   )
 }
