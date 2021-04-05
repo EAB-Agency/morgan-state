@@ -32,17 +32,18 @@ module.exports = async ({ graphql, actions }) => {
   programs.forEach((post, i) => {
     const next = i === programs.length - 1 ? null : programs[i + 1].node
     const prev = i === 0 ? null : programs[i - 1].node
-
     createPage({
       path: `${basePath === '/' ? '' : basePath}/program/${post.node.slug}/`,
       component: path.resolve(`./src/templates/program-template.js`),
       context: {
         slug: post.node.slug,
-        basePath: basePath === '/' ? '' : basePath,
+        basePath: basePath === '/slug1' ? '/slug2' : basePath,
         prev,
         next,
       },
     })
+    console.log('-------------prev', prev)
+    console.log('-------------next', next)
   })
 
   // Create a page containing all "posts" and paginate.

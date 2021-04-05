@@ -12,9 +12,11 @@ import TagList from '../components/TagList'
 import PostLinks from '../components/PostLinks'
 import SEO from '../components/SEO'
 import CardList from '../components/CardList'
+import Testimonial from '../components/Testimonial'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { BLOCKS, INLINES } from '@contentful/rich-text-types'
 import StatCard from '../components/StatCard'
+import { Button } from '@theme-ui/components'
 
 const CarouselContent = props => (
   <div id={props.id}>
@@ -40,6 +42,15 @@ const WhyMorganState = styled.div`
 const SkillsAndJobs = styled.div`
   background: lightsteelblue;
 `
+const AchieveSuccess = styled.div`
+  background: lightslategray;
+`
+const FinancialAidOptions = styled.div`
+  background: lightyellow;
+`
+const DiscoverProgramCTA = styled.div`
+  background: lightskyblue;
+`
 const CareerDetails = styled.div`
   background: lightpink;
 `
@@ -48,15 +59,25 @@ const ResearchAndInternships = styled.div`
 `
 const RICHTEXT_OPTIONS = {
   renderNode: {
-    [BLOCKS.PARAGRAPH]: (node, children) => {
-      return <p>{children}</p>
-    },
     [INLINES.HYPERLINK]: (node, children) => {
       return (
         <a className="link" href={node.data.uri}>
           {children}
         </a>
       )
+    },
+    [BLOCKS.PARAGRAPH]: (node, children) => {
+      return <p>{children}</p>
+    },
+    [BLOCKS.LIST_ITEM]: (node, children) => {
+      const UnTaggedChildren = documentToReactComponents(node, {
+        renderNode: {
+          [BLOCKS.PARAGRAPH]: (node, children) => children,
+          [BLOCKS.LIST_ITEM]: (node, children) => children,
+        },
+      })
+
+      return <li>{UnTaggedChildren}</li>
     },
     [BLOCKS.EMBEDDED_ASSET]: node => {
       const { title, description, file } = node.data.target.fields
@@ -103,7 +124,10 @@ const ProgramTemplate = ({ data, pageContext }) => {
     programDetailUrl,
     skillsAndJobs,
     careerDetails,
+    researchAndInternships,
     carouselContent,
+    testimonial,
+    financialAidOptions,
     additionalResources,
     prefooterCtaCopy,
     applicationUrl,
@@ -111,7 +135,6 @@ const ProgramTemplate = ({ data, pageContext }) => {
     iwc,
     relatedPrograms,
   } = data.contentfulProgram
-
   const previous = pageContext.prev
   const next = pageContext.next
   const { basePath } = pageContext
@@ -141,7 +164,9 @@ const ProgramTemplate = ({ data, pageContext }) => {
           <h1>{fullProgramName}</h1>
           <ul>
             {availableMethodsOfStudy &&
-              availableMethodsOfStudy.map(method => <li>{method}</li>)}
+              availableMethodsOfStudy.map(method => (
+                <li key={method}>{method}</li>
+              ))}
           </ul>
           <StatBlock>
             <span>{creditHours}</span>
@@ -164,9 +189,10 @@ const ProgramTemplate = ({ data, pageContext }) => {
           <h2>Why Morgan State?</h2>
           <WhyMorganState>
             <CardList>
-              {whyMorganStateStats.map(node => (
-                <StatCard key={node.id} {...node} />
-              ))}
+              {whyMorganStateStats &&
+                whyMorganStateStats.map(node => (
+                  <StatCard key={node.id} {...node} />
+                ))}
             </CardList>
           </WhyMorganState>
           <h2>Move Forward in Your Professional Career</h2>
@@ -180,57 +206,79 @@ const ProgramTemplate = ({ data, pageContext }) => {
             nec posuere quam vel egestas.
           </p>
           <SkillsAndJobs>
-            <h2>Learn In Demand Skills</h2>
-            {documentToReactComponents(skillsAndJobs.json, RICHTEXT_OPTIONS)}
+            {/* <h2>Learn In Demand Skills</h2> */}
+            {skillsAndJobs &&
+              documentToReactComponents(skillsAndJobs.json, RICHTEXT_OPTIONS)}
           </SkillsAndJobs>
           <CareerDetails>
-            <h2>Get the job you want</h2>
-            {documentToReactComponents(careerDetails.json, RICHTEXT_OPTIONS)}
+            {/* <h2>Get the job you want</h2> */}
+            {careerDetails &&
+              documentToReactComponents(careerDetails.json, RICHTEXT_OPTIONS)}
           </CareerDetails>
           <ResearchAndInternships>
-            <h2>Pursue Hands-on Research and Internships</h2>
-            <p>
-              Lorem ipsum dolor sit amet turpis cursus lacinia senectus volutpat
-              magna nisi. Lacus at nec lobortis augue eros diam donec a enim
-              mattis faucibus. Fames etiam semper eget sapien mauris risus porta
-              hendrerit. Ornare porttitor fermentum feugiat erat sagittis vitae
-              viverra vivamus venenatis. Fermentum urna ullamcorper aliquam
-              feugiat justo ornare consectetur ultricies.
-            </p>
-            <ul>
-              <li>
-                Lorem ipsum dolor sit amet molestie nisl nunc integer gravida
-                duis neque blandit habitasse consequat.{' '}
-              </li>
-              <li>
-                Cras auctor mauris non iaculis do neque pretium turpis leo morbi
-                lobortis leo velit a.
-              </li>
-              <li>
-                Lorem ipsum dolor sit amet aenean imperdiet malesuada lobortis.
-              </li>
-            </ul>
+            {researchAndInternships &&
+              documentToReactComponents(
+                researchAndInternships.json,
+                RICHTEXT_OPTIONS
+              )}
           </ResearchAndInternships>
           {/* https://brainhubeu.github.io/react-carousel/docs/gettingStarted */}
-          <Carousel
-            plugins={[
-              'centered',
-              'arrows',
-              {
-                resolve: slidesToShowPlugin,
-                options: {
-                  numberOfSlides: 2,
+          {carouselContent && (
+            <Carousel
+              plugins={[
+                'centered',
+                'arrows',
+                'infinite',
+                {
+                  resolve: slidesToShowPlugin,
+                  options: {
+                    numberOfSlides: 2,
+                  },
                 },
-              },
-            ]}
-          >
-            {carouselContent.map(node => (
-              <CarouselContent {...node} />
-            ))}
-          </Carousel>
+              ]}
+            >
+              {carouselContent.map(node => (
+                <CarouselContent key={node.id} {...node} />
+              ))}
+            </Carousel>
+          )}
+          <AchieveSuccess>
+            <h2>Achieve Success Like Our Alumni</h2>
+            <p>
+              Lorem ipsum dolor sit amet nunc diam curabitur pretium lectus non
+              sodales. Ut risus a lacus curabitur turpis incididunt quisque quam
+              aliquet. Est orci aliqua pharetra mi senectus quisque volutpat
+              laoreet. Velit arcu facilisis enim eu curabitur quam augue
+              sodales. At hac luctus aliqua mattis nullam semper neque posuere
+              nisi dapibus nulla sollicitudin.
+            </p>
+          </AchieveSuccess>
+          <Testimonial
+            image={testimonial.image}
+            quote={testimonial.quote}
+            author={testimonial.author}
+          ></Testimonial>
+          <FinancialAidOptions>
+            {financialAidOptions &&
+              documentToReactComponents(
+                financialAidOptions.json,
+                RICHTEXT_OPTIONS
+              )}
+          </FinancialAidOptions>
+          <DiscoverProgramCTA>
+            <h3>
+              Discover the {typeOfDegree} in {fullProgramName}
+            </h3>
+            <p>Lorem ipsum dolor sit amet ac urna ullamcorper nisi.</p>
+            <Button>Request Information</Button>
+          </DiscoverProgramCTA>
         </PageBody>
       </Container>
-      <PostLinks previous={previous} next={next} basePath={basePath} />
+      <PostLinks
+        previous={previous}
+        next={next}
+        basePath={`${basePath}/program`}
+      />
     </Layout>
   )
 }
@@ -274,6 +322,9 @@ export const query = graphql`
       careerDetails {
         json
       }
+      researchAndInternships {
+        json
+      }
       carouselContent {
         id
         title
@@ -283,6 +334,20 @@ export const query = graphql`
             ...GatsbyContentfulFluid_withWebp_noBase64
           }
         }
+      }
+      testimonial {
+        author
+        quote {
+          json
+        }
+        image {
+          fluid(maxWidth: 800) {
+            ...GatsbyContentfulFluid_withWebp_noBase64
+          }
+        }
+      }
+      financialAidOptions {
+        json
       }
       additionalResources {
         internal {
