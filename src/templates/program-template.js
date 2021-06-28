@@ -136,7 +136,6 @@ const ProgramTemplate = ({ data, pageContext }) => {
     prefooterCtaCopy,
     applicationUrl,
     tuitionCalculatorUrl,
-    iwc,
     relatedPrograms,
   } = data.contentfulProgram
   const previous = pageContext.prev
@@ -417,10 +416,6 @@ export const query = graphql`
         internal {
           content
         }
-      }
-      iwc {
-        iwcTitle
-        iwcLocation
       }
       relatedPrograms {
         fullProgramName
