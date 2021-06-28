@@ -117,6 +117,7 @@ const ProgramTemplate = ({ data, pageContext }) => {
     tags,
     fullProgramName,
     description,
+    programDescriptionImage,
     availableMethodsOfStudy,
     creditHours,
     monthsToComplete,
@@ -165,11 +166,16 @@ const ProgramTemplate = ({ data, pageContext }) => {
       <Container>
         {tags && <TagList tags={tags} basePath={basePath} />}
         <PageBody body={body}>
-          <h1>{fullProgramName}</h1>
+          <h1>
+            {typeOfDegree} in {fullProgramName}
+          </h1>
           <ul>
             {availableMethodsOfStudy &&
               availableMethodsOfStudy.map(method => (
-                <li key={method}>{method}</li>
+                <>
+                  <b>Learning Mode: </b>
+                  <span key={method}>{method}</span>
+                </>
               ))}
           </ul>
           <StatBlock>
@@ -188,6 +194,20 @@ const ProgramTemplate = ({ data, pageContext }) => {
             Change Your Future with a {typeOfDegree} in {fullProgramName}
           </h2>
           <Description>
+            <img
+              title={
+                programDescriptionImage.title
+                  ? programDescriptionImage.title['en-US']
+                  : null
+              }
+              alt={
+                programDescriptionImage.description
+                  ? programDescriptionImage.description['en-US']
+                  : null
+              }
+              src={programDescriptionImage.fluid.src}
+            />
+
             {documentToReactComponents(description.json, RICHTEXT_OPTIONS)}
           </Description>
           <h2>Why Morgan State?</h2>
@@ -284,6 +304,7 @@ const ProgramTemplate = ({ data, pageContext }) => {
             <Button>Request Information</Button>
           </DiscoverProgramCTA>
           <RelatedPrograms>
+            <h2>Related Programs</h2>
             {relatedSchoolCollege &&
               relatedSchoolCollege.program.map(program => (
                 <Card
@@ -317,6 +338,13 @@ export const query = graphql`
         fluid(maxWidth: 400) {
           ...GatsbyContentfulFluid_withWebp_noBase64
         }
+      }
+      programDescriptionImage {
+        fluid(maxWidth: 400) {
+          ...GatsbyContentfulFluid_withWebp_noBase64
+        }
+        description
+        title
       }
       availableMethodsOfStudy
       creditHours
