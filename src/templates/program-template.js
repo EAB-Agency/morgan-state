@@ -117,7 +117,6 @@ const ProgramTemplate = ({ data, pageContext }) => {
     tags,
     fullProgramName,
     description,
-    programDescriptionImage,
     availableMethodsOfStudy,
     creditHours,
     monthsToComplete,
@@ -194,7 +193,7 @@ const ProgramTemplate = ({ data, pageContext }) => {
             Change Your Future with a {typeOfDegree} in {fullProgramName}
           </h2>
           <Description>
-            <img
+            {/* <img
               title={
                 programDescriptionImage.title
                   ? programDescriptionImage.title['en-US']
@@ -206,7 +205,7 @@ const ProgramTemplate = ({ data, pageContext }) => {
                   : null
               }
               src={programDescriptionImage.fluid.src}
-            />
+            /> */}
 
             {documentToReactComponents(description.json, RICHTEXT_OPTIONS)}
           </Description>
@@ -339,10 +338,6 @@ export const query = graphql`
           ...GatsbyContentfulFluid_withWebp_noBase64
         }
       }
-      programDescriptionImage {
-        fluid(maxWidth: 400) {
-          ...GatsbyContentfulFluid_withWebp_noBase64
-        }
         description
         title
       }
