@@ -107,7 +107,6 @@ const ProgramTemplate = ({ data, pageContext }) => {
     title,
     metaDescription,
     heroImage,
-    body,
     tags,
     fullProgramName,
     description,
@@ -141,16 +140,14 @@ const ProgramTemplate = ({ data, pageContext }) => {
       <SEO
         title={title}
         description={
-          metaDescription
-            ? metaDescription.internal.content
-            : body.childMarkdownRemark.excerpt
+          metaDescription ? metaDescription.internal.content : 'Title Needed'
         }
         image={ogImage}
       />
       <Hero title={title} image={heroImage} height={'50vh'} />
       <Container>
         {tags && <TagList tags={tags} basePath={basePath} />}
-        <PageBody body={body}>
+        <PageBody body="xxxxxxxxx">
           <h1>
             {typeOfDegree} in {fullProgramName}
           </h1>
@@ -179,21 +176,8 @@ const ProgramTemplate = ({ data, pageContext }) => {
             Change Your Future with a {typeOfDegree} in {fullProgramName}
           </h2>
           <Description>
-            {/* <img
-              title={
-                programDescriptionImage.title
-                  ? programDescriptionImage.title['en-US']
-                  : null
-              }
-              alt={
-                programDescriptionImage.description
-                  ? programDescriptionImage.description['en-US']
-                  : null
-              }
-              src={programDescriptionImage.fluid.src}
-            /> */}
-
-            {documentToReactComponents(description.json, RICHTEXT_OPTIONS)}
+            {description &&
+              documentToReactComponents(description.json, RICHTEXT_OPTIONS)}
           </Description>
           <h2>Why Morgan State?</h2>
           <WhyMorganState>
