@@ -46,9 +46,6 @@ const SkillsAndJobs = styled.div`
 const AchieveSuccess = styled.div`
   background: lightslategray;
 `
-const FinancialAidOptions = styled.div`
-  background: lightyellow;
-`
 const DiscoverProgramCTA = styled.div`
   background: lightskyblue;
 `
@@ -57,9 +54,6 @@ const RelatedPrograms = styled.div`
 `
 const CareerDetails = styled.div`
   background: lightpink;
-`
-const ResearchAndInternships = styled.div`
-  background: lightsalmon;
 `
 const RICHTEXT_OPTIONS = {
   renderNode: {
@@ -121,21 +115,14 @@ const ProgramTemplate = ({ data, pageContext }) => {
     creditHours,
     monthsToComplete,
     programTracks,
-    startDates,
     typeOfDegree,
     whyMorganStateStats,
     relatedSchoolCollege,
     programDetailUrl,
     skillsAndJobs,
     careerDetails,
-    researchAndInternships,
     carouselContent,
     testimonial,
-    financialAidOptions,
-    additionalResources,
-    prefooterCtaCopy,
-    applicationUrl,
-    tuitionCalculatorUrl,
     relatedPrograms,
   } = data.contentfulProgram
   const previous = pageContext.prev
@@ -237,13 +224,7 @@ const ProgramTemplate = ({ data, pageContext }) => {
             {careerDetails &&
               documentToReactComponents(careerDetails.json, RICHTEXT_OPTIONS)}
           </CareerDetails>
-          <ResearchAndInternships>
-            {researchAndInternships &&
-              documentToReactComponents(
-                researchAndInternships.json,
-                RICHTEXT_OPTIONS
-              )}
-          </ResearchAndInternships>
+
           {carouselContent &&
             carouselContent.map(node => (
               <CarouselContent key={node.id} {...node} />
@@ -287,13 +268,7 @@ const ProgramTemplate = ({ data, pageContext }) => {
               author={testimonial.author}
             ></Testimonial>
           )}
-          <FinancialAidOptions>
-            {financialAidOptions &&
-              documentToReactComponents(
-                financialAidOptions.json,
-                RICHTEXT_OPTIONS
-              )}
-          </FinancialAidOptions>
+
           <DiscoverProgramCTA>
             <h3>
               Discover the {typeOfDegree} in {fullProgramName}
@@ -341,7 +316,6 @@ export const query = graphql`
       creditHours
       monthsToComplete
       programTracks
-      startDates
       typeOfDegree
       whyMorganStateStats {
         title
@@ -373,9 +347,6 @@ export const query = graphql`
       careerDetails {
         json
       }
-      researchAndInternships {
-        json
-      }
       carouselContent {
         id
         title
@@ -397,21 +368,6 @@ export const query = graphql`
           }
         }
       }
-      financialAidOptions {
-        json
-      }
-      additionalResources {
-        internal {
-          content
-        }
-      }
-      prefooterCtaCopy {
-        internal {
-          content
-        }
-      }
-      applicationUrl
-      tuitionCalculatorUrl
       metaDescription {
         internal {
           content
