@@ -1,93 +1,25 @@
-# gatsby-starter-gcn
 
-A starter template to build amazing static websites with Gatsby, Contentful and Netlify. Inspired by [gatsby-contentful-starter](https://github.com/contentful-userland/gatsby-contentful-starter).
-
-## Features
-
-- Contentful integration with ready to go placeholder content
-- Netlify integration including a pre-built contact form
-- Minimal responsive design - made to customize or tear apart
-- Pagination logic
-- Theme UI
-- SEO Friendly Component
-  - OpenGraph sharing support
-  - Sitemap Generation
-- Google Analytics
-- Progressive Web app
-- Offline Support
-- [Gatsby Standard module](https://www.npmjs.com/package/eslint-config-gatsby-standard) for linting Javascript with StandardJS
-- Stylelint support for Styled Components to lint the CSS in JS
-
-## Demo
-
-https://gcn.netlify.com/
-
-![](screenshots/demo.jpg)
 
 ## Getting Started
 
 ### Install
 
 ```
-git clone https://github.com/ryanwiemer/gatsby-starter-gcn.git
 yarn install
-```
-
-Or via the [Gatsby CLI](https://www.npmjs.com/package/gatsby-cli)
-
-```
-gatsby new gatsby-starter-gcn https://github.com/ryanwiemer/gatsby-starter-gcn.git
 ```
 
 ### Setup Contentful
 
-1.  [Sign up](https://www.contentful.com/sign-up/) for Contentful and create a new empty space
+1.  Rename `env.development` and `env.production` to `.env.development` and `.env.production` (with the `.`). Get parameters from Bob (or in contentful).
 
-2.  `yarn run setup`
+### Install Ngrok (for preview updates)
+1. A simple `brew install ngrok` and then `ngrok http 8000` (the gatsby app will run on port 8000)
+2. Copy the https url and paste it into a new webhook in contentful (Settings > webhooks).
+3. Append `/__refresh` onto the end of the URL and save.
+4. Now your localhost (and the ngrok url... they are the same) will refresh, after a few seconds, with the latest content from contenful.
 
-3.  Enter in the requested info for your Contentful space found here: **app.contentful.com** → **Space Settings** → **API keys**. You will need to provide both a standard API key (first tab) and a management key (second tab).
-
-## Customization
-
-### Website Data
-
-Edit siteMeta data in [`/src/gatsby-config.js`](https://github.com/ryanwiemer/gatsby-starter-gcn/blob/master/src/gatsby-config.js)
-
-```js
-  siteMetadata: {
-    title: 'GCN', // Title of the website
-    description: // Description of the website
-      'A starter template to build amazing static websites with Gatsby, Contentful and Netlify',
-    siteUrl: 'https://gcn.netlify.com', // Website URL. Do not include trailing slash
-    image: '/images/share.jpg', // Path to default image for SEO
-    menuLinks: [ // The links used in the top menu
-      {
-        name: 'Home',
-        slug: '/',
-      },
-      {
-        name: 'About',
-        slug: '/about/',
-      },
-      {
-        name: 'Contact',
-        slug: '/contact/',
-      },
-    ],
-    postsPerFirstPage: 7, // Number of posts on the first page
-    postsPerPage: 6, // Number of posts used on all other pages
-    /*
-      Root URL for posts and tags
-      For example: 'blog' will result in:
-        - www.example.com/blog/
-        - www.example.com/blog/post-name/
-        - www.example.com/blog/tag/tag-name/
-    */
-    basePath: '/', // Defaults to the homepage
-  }
-```
-
-**Note:** If you do not see your changes reflected when developing locally you may need to run `yarn clean` followed by restarting the server via `yarn develop`.
+### Run dev server
+1. `yarn develop`
 
 ### Theme UI
 
@@ -122,7 +54,6 @@ export default {
 ### Using Gatsby Standard
 
 1.  Quickly check your code for errors with the `yarn test` script
-2.  You can view the [Gatsby Standard README](https://github.com/brandonkal/eslint-config-gatsby-standard) for details on how to integrate this project's included Gatsby Standard, Stylelint, and Prettier modules into your text editor
 
 ### Content and SEO
 
