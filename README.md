@@ -15,8 +15,9 @@ yarn install
 ### Install Ngrok (for preview updates)
 1. A simple `brew install ngrok` and then `ngrok http 8000` (the gatsby app will run on port 8000)
 2. Copy the https url and paste it into a new webhook in contentful (Settings > webhooks).
-3. Append `/__refresh` onto the end of the URL and save.
-4. Now your localhost (and the ngrok url... they are the same) will refresh, after a few seconds, with the latest content from contenful.
+3. ***NOTE*** This url changes every time you rerun ngork. So you'll have to copy a new url into contentful every time.
+4. Append `/__refresh` onto the end of the URL and save.
+5. Now your localhost (and the ngrok url... they are the same) will refresh, after a few seconds, with the latest content from contenful.
 
 ### Run dev server
 1. `yarn develop`
