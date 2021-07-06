@@ -55,6 +55,10 @@ const RelatedPrograms = styled.div`
 const CareerDetails = styled.div`
   background: lightpink;
 `
+const CarouselPreText = styled.div`
+  background: grey;
+`
+
 const RICHTEXT_OPTIONS = {
   renderNode: {
     [INLINES.HYPERLINK]: (node, children) => {
@@ -120,6 +124,7 @@ const ProgramTemplate = ({ data, pageContext }) => {
     programDetailUrl,
     skillsAndJobs,
     careerDetails,
+    carouselPreText,
     carouselContent,
     testimonial,
     relatedPrograms,
@@ -209,11 +214,21 @@ const ProgramTemplate = ({ data, pageContext }) => {
             {skillsAndJobs &&
               documentToReactComponents(skillsAndJobs.json, RICHTEXT_OPTIONS)}
           </SkillsAndJobs>
-          <CareerDetails>
-            {/* <h2>Get the job you want</h2> */}
-            {careerDetails &&
-              documentToReactComponents(careerDetails.json, RICHTEXT_OPTIONS)}
-          </CareerDetails>
+          {careerDetails && (
+            <CareerDetails>
+              {/* <h2>Get the job you want</h2> */}
+              {documentToReactComponents(careerDetails.json, RICHTEXT_OPTIONS)}
+            </CareerDetails>
+          )}
+
+          {carouselPreText && (
+            <CarouselPreText>
+              {documentToReactComponents(
+                carouselPreText.json,
+                RICHTEXT_OPTIONS
+              )}
+            </CarouselPreText>
+          )}
 
           {carouselContent &&
             carouselContent.map(node => (
@@ -266,23 +281,24 @@ const ProgramTemplate = ({ data, pageContext }) => {
             <p>Lorem ipsum dolor sit amet ac urna ullamcorper nisi.</p>
             <Button>Request Information</Button>
           </DiscoverProgramCTA>
-          <RelatedPrograms>
-            <h2>Explore Related Programs</h2>
-            {relatedPrograms &&
+          {relatedPrograms && (
+            <RelatedPrograms>
+              <h2>Explore Related Programs</h2>
               relatedPrograms.map(program => (
-                <Card
-                  key={program.id}
-                  slug={program.slug}
-                  heroImage={program.heroImage}
-                  title={program.fullProgramName}
-                  body={
-                    program.metaDescription
-                      ? program.metaDescription.metaDescription
-                      : 'no meta description entered'
-                  }
-                />
-              ))}
-          </RelatedPrograms>
+              <Card
+                key={program.id}
+                slug={program.slug}
+                heroImage={program.heroImage}
+                title={`${program.fullProgramName} (${program.typeOfDegree})`}
+                body={
+                  program.metaDescription
+                    ? program.metaDescription.metaDescription
+                    : 'no meta description entered'
+                }
+              />
+              ))
+            </RelatedPrograms>
+          )}
         </PageBody>
       </Container>
       {/* <PostLinks
@@ -327,6 +343,9 @@ export const query = graphql`
       careerDetails {
         json
       }
+      carouselPreText {
+        json
+      }
       carouselContent {
         id
         title
@@ -355,6 +374,7 @@ export const query = graphql`
         fullProgramName
         id
         slug
+        typeOfDegree
         metaDescription {
           metaDescription
         }
