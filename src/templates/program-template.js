@@ -140,7 +140,7 @@ const ProgramTemplate = ({ data, pageContext }) => {
       <SEO
         title={title}
         description={
-          metaDescription ? metaDescription.internal.content : 'Title Needed'
+          metaDescription ? metaDescription.metaDescription : 'Title Needed'
         }
         image={ogImage}
       />
@@ -262,15 +262,22 @@ const ProgramTemplate = ({ data, pageContext }) => {
           </DiscoverProgramCTA>
           <RelatedPrograms>
             <h2>Related Programs</h2>
-            {relatedSchoolCollege &&
-              relatedSchoolCollege.program.map(program => (
-                <Card
-                  key={program.id}
-                  slug={program.slug}
-                  heroImage={program.heroImage}
-                  title={program.fullProgramName}
-                  body={program.metaDescription.metaDescription}
-                />
+            {relatedPrograms &&
+              relatedPrograms.map(program => (
+                <>
+                  {JSON.stringify(program)}
+                  <Card
+                    key={program.id}
+                    slug={program.slug}
+                    heroImage={program.heroImage}
+                    title={program.fullProgramName}
+                    body={
+                      program.metaDescription
+                        ? program.metaDescription.metaDescription
+                        : 'no meta description entered'
+                    }
+                  />
+                </>
               ))}
           </RelatedPrograms>
         </PageBody>
@@ -310,20 +317,6 @@ export const query = graphql`
           }
         }
       }
-      relatedSchoolCollege {
-        program {
-          slug
-          metaDescription {
-            metaDescription
-          }
-          heroImage {
-            fluid {
-              src
-            }
-          }
-          fullProgramName
-        }
-      }
       programDetailUrl
       skillsAndJobs {
         json
@@ -353,14 +346,15 @@ export const query = graphql`
         }
       }
       metaDescription {
-        internal {
-          content
-        }
+        metaDescription
       }
       relatedPrograms {
         fullProgramName
         id
         slug
+        metaDescription {
+          metaDescription
+        }
         heroImage {
           fluid(maxWidth: 350, maxHeight: 196, resizingBehavior: SCALE) {
             ...GatsbyContentfulFluid_withWebp_noBase64

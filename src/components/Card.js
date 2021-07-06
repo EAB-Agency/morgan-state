@@ -67,9 +67,9 @@ const Excerpt = styled.p`
 const Card = ({ slug, heroImage, title, body, ...props }) => {
   return (
     <>
-      {heroImage && body && (
+      {title && (
         <Post featured={props.featured}>
-          <Link to={`${props.basePath}/${slug}/`}>
+          <Link to={`/program/${slug}/`}>
             <StyledImg
               fluid={heroImage && heroImage.fluid}
               backgroundColor={'#eeeeee'}
