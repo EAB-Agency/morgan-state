@@ -42,7 +42,7 @@ const StyledImg = styled(Img)`
   border-top-right-radius: 1px;
 `
 
-const Title = styled.h2`
+const Title = styled.h3`
   font-size: 1.5em;
   font-weight: 600;
   text-transform: capitalize;

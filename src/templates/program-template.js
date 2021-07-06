@@ -160,18 +160,24 @@ const ProgramTemplate = ({ data, pageContext }) => {
                 </>
               ))}
           </ul>
-          <StatBlock>
-            <span>{creditHours}</span>
-            Credit Hours
-          </StatBlock>
-          <StatBlock>
-            <span>{monthsToComplete}</span>
-            Months to Complete
-          </StatBlock>
-          <StatBlock>
-            <span>{programTracks}</span>
-            Program Tracks
-          </StatBlock>
+          {creditHours && (
+            <StatBlock>
+              <span>{creditHours}</span>
+              Credit Hours
+            </StatBlock>
+          )}
+          {monthsToComplete && (
+            <StatBlock>
+              <span>{monthsToComplete}</span>
+              Months to Complete
+            </StatBlock>
+          )}
+          {programTracks && (
+            <StatBlock>
+              <span>{programTracks}</span>
+              Program Tracks
+            </StatBlock>
+          )}
           <h2>
             Change Your Future with a {typeOfDegree} in {fullProgramName}
           </h2>
@@ -261,23 +267,20 @@ const ProgramTemplate = ({ data, pageContext }) => {
             <Button>Request Information</Button>
           </DiscoverProgramCTA>
           <RelatedPrograms>
-            <h2>Related Programs</h2>
+            <h2>Explore Related Programs</h2>
             {relatedPrograms &&
               relatedPrograms.map(program => (
-                <>
-                  {JSON.stringify(program)}
-                  <Card
-                    key={program.id}
-                    slug={program.slug}
-                    heroImage={program.heroImage}
-                    title={program.fullProgramName}
-                    body={
-                      program.metaDescription
-                        ? program.metaDescription.metaDescription
-                        : 'no meta description entered'
-                    }
-                  />
-                </>
+                <Card
+                  key={program.id}
+                  slug={program.slug}
+                  heroImage={program.heroImage}
+                  title={program.fullProgramName}
+                  body={
+                    program.metaDescription
+                      ? program.metaDescription.metaDescription
+                      : 'no meta description entered'
+                  }
+                />
               ))}
           </RelatedPrograms>
         </PageBody>
