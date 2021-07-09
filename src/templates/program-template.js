@@ -14,17 +14,21 @@ import SEO from '../components/SEO'
 import Card from '../components/Card'
 import CardList from '../components/CardList'
 import Testimonial from '../components/Testimonial'
+import ImageSlider from '../components/Slider'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { BLOCKS, INLINES } from '@contentful/rich-text-types'
 import StatCard from '../components/StatCard'
 import { Button } from '@theme-ui/components'
 
-const CarouselContent = props => (
-  <div id={props.id}>
-    <img src={props.image.fluid.src} />
-    <p>{props.description}</p>
-  </div>
-)
+const carouselSettings = {
+  dot: true,
+  infinite: true,
+  speed: 500,
+  arrows: true,
+  slidesToShow: 4,
+  slidesToScroll: 4,
+  cssEase: 'linear',
+}
 
 const StatBlock = styled.div`
   padding: 1rem;
@@ -140,6 +144,22 @@ const ProgramTemplate = ({ data, pageContext }) => {
     ogImage = null
   }
 
+  const normalizedCarousel = carouselContent.map(item => ({
+    id: item.id,
+    title: item.title,
+    src: item.image,
+    description: item.description,
+  }))
+
+  const normalizedRelated = relatedPrograms.map(item => ({
+    id: item.id,
+    title: item.fullProgramName,
+    src: item.heroImage,
+    description: item.metaDescription
+      ? item.metaDescription.metaDescription
+      : null,
+  }))
+
   return (
     <Layout>
       <SEO
@@ -229,32 +249,13 @@ const ProgramTemplate = ({ data, pageContext }) => {
               )}
             </CarouselPreText>
           )}
+          {normalizedCarousel && (
+            <ImageSlider
+              data={normalizedCarousel}
+              settings={carouselSettings}
+            />
+          )}
 
-          {carouselContent &&
-            carouselContent.map(node => (
-              <CarouselContent key={node.id} {...node} />
-            ))}
-
-          {/* https://brainhubeu.github.io/react-carousel/docs/gettingStarted */}
-          {/* {carouselContent && (
-            <Carousel
-              plugins={[
-                'centered',
-                'arrows',
-                'infinite',
-                {
-                  resolve: slidesToShowPlugin,
-                  options: {
-                    numberOfSlides: 2,
-                  },
-                },
-              ]}
-            >
-              {carouselContent.map(node => (
-                <CarouselContent key={node.id} {...node} />
-              ))}
-            </Carousel>
-          )} */}
           <AchieveSuccess>
             <h2>Achieve Success Like Our Alumni</h2>
             <p>
@@ -281,22 +282,13 @@ const ProgramTemplate = ({ data, pageContext }) => {
             <p>Lorem ipsum dolor sit amet ac urna ullamcorper nisi.</p>
             <Button>Request Information</Button>
           </DiscoverProgramCTA>
-          {relatedPrograms && (
+          {normalizedRelated && (
             <RelatedPrograms>
               <h2>Explore Related Programs</h2>
-              relatedPrograms.map(program => (
-              <Card
-                key={program.id}
-                slug={program.slug}
-                heroImage={program.heroImage}
-                title={`${program.fullProgramName} (${program.typeOfDegree})`}
-                body={
-                  program.metaDescription
-                    ? program.metaDescription.metaDescription
-                    : 'no meta description entered'
-                }
+              <ImageSlider
+                data={normalizedRelated}
+                settings={carouselSettings}
               />
-              ))
             </RelatedPrograms>
           )}
         </PageBody>

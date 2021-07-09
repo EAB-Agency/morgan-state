@@ -19,7 +19,11 @@ const RICHTEXT_OPTIONS = {
   },
 }
 
-const Quote = styled.li`
+const Figure = styled.figure`
+  width: 100%;
+`
+
+const Quote = styled.blockquote`
   position: relative;
   border: 1px solid red;
   border-radius: 2px;
@@ -33,17 +37,13 @@ const Quote = styled.li`
   @media screen and (min-width: ${props => props.theme.responsive.medium}) {
     flex: ${props => (props.featured ? '0 0 100%' : '0 0 32%')};
   }
-  &:hover {
-    background: green;
-  }
 `
 
 const StyledImg = styled(Img)`
-  border-top-left-radius: 1px;
-  border-top-right-radius: 1px;
+  border: 5px solid #000;
 `
 
-const Author = styled.h4`
+const Author = styled.figcaption`
   font-size: 1.5em;
   font-weight: 600;
   text-transform: capitalize;
@@ -54,11 +54,13 @@ const Testimonial = ({ quote, author, image, ...props }) => {
   return (
     <>
       {quote && (
-        <Quote>
-          <StyledImg fluid={image.fluid} backgroundColor={'#eeeeee'} />
-          {documentToReactComponents(quote.json, RICHTEXT_OPTIONS)}
-          <Author>-- {author}</Author>
-        </Quote>
+        <Figure>
+          <Quote>
+            <StyledImg fluid={image.fluid} backgroundColor={'#eeeeee'} />
+            {documentToReactComponents(quote.json, RICHTEXT_OPTIONS)}
+            <Author>- {author}</Author>
+          </Quote>
+        </Figure>
       )}
     </>
   )

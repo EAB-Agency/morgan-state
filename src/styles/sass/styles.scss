@@ -1,6 +1,11 @@
 // ============================
 //* Author: @andreiolea
 //* Email: aolea@eab.com
-//* Project: UNLV 
+//* Project: UNLV
 
-@import "foundation/index";
+@import 'foundation/index';
+
+.slick-prev:before,
+.slick-next:before {
+  color: red;
+}
