@@ -144,21 +144,25 @@ const ProgramTemplate = ({ data, pageContext }) => {
     ogImage = null
   }
 
-  const normalizedCarousel = carouselContent.map(item => ({
-    id: item.id,
-    title: item.title,
-    src: item.image,
-    description: item.description,
-  }))
+  const normalizedCarousel =
+    carouselContent &&
+    carouselContent.map(item => ({
+      id: item.id,
+      title: item.title,
+      src: item.image,
+      description: item.description,
+    }))
 
-  const normalizedRelated = relatedPrograms.map(item => ({
-    id: item.id,
-    title: item.fullProgramName,
-    src: item.heroImage,
-    description: item.metaDescription
-      ? item.metaDescription.metaDescription
-      : null,
-  }))
+  const normalizedRelated =
+    relatedPrograms &&
+    relatedPrograms.map(item => ({
+      id: item.id,
+      title: item.fullProgramName,
+      src: item.heroImage,
+      description: item.metaDescription
+        ? item.metaDescription.metaDescription
+        : null,
+    }))
 
   return (
     <Layout>
