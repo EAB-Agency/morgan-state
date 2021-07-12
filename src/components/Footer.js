@@ -44,7 +44,7 @@ const Item = styled.li`
 const Footer = () => (
   <Wrapper>
     <List>
-      <Item></Item>
+      <Item>footer</Item>
       <Item></Item>
     </List>
   </Wrapper>

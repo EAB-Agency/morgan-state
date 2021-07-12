@@ -2,33 +2,50 @@ import React from 'react'
 import { Link, graphql } from 'gatsby'
 import get from 'lodash/get'
 import { Helmet } from 'react-helmet'
+import SEO from '../components/SEO'
 import Layout from '../components/Layout'
+import Container from '../components/Container'
 import ProgramPreview from '../components/ProgramPreview'
 
-class ProgramIndex extends React.Component {
-  render() {
-    const siteTitle = get(this, 'props.data.site.siteMetadata.title')
-    const programs = get(this, 'props.data.allContentfulProgram.edges')
+const ProgramIndex = ({ data }) => {
+  const schools = data.allContentfulPartner.edges[0].node.school
+  const programs = data.allContentfulProgram.edges
 
-    return (
-      <Layout location={this.props.location}>
-        <div style={{ background: '#fff' }}>
-          <Helmet title={siteTitle} />
-          <div className="wrapper">
-            <ul className="article-list">
-              {programs.map(({ node: post }) => {
+  return (
+    <Layout>
+      <SEO
+        title={data.site.siteMetadata.title}
+        description={data.site.siteMetadata.description}
+        image="{ogImage}"
+      />
+      <Container data={data} schools={schools}>
+        {schools.map(school => (
+          <>
+            <h2>{school.title}</h2>
+            {school.program &&
+              school.program.map(program => {
                 return (
-                  <li key={post.slug}>
-                    <ProgramPreview program={post} />
+                  <li key={program.slug}>
+                    <ProgramPreview program={program} />
                   </li>
                 )
               })}
-            </ul>
-          </div>
-        </div>
-      </Layout>
-    )
-  }
+          </>
+        ))}
+        <h2>***** Programs that don't have a college associated yet *****</h2>
+        <p>this is for dev work only so that you can see all the programs</p>
+        {programs.map(({ node: program }) => {
+          if (!program.relatedSchoolCollege) {
+            return (
+              <li key={program.slug}>
+                <ProgramPreview program={program} />
+              </li>
+            )
+          }
+        })}
+      </Container>
+    </Layout>
+  )
 }
 
 export default ProgramIndex
@@ -40,7 +57,31 @@ export const pageQuery = graphql`
         title
       }
     }
-    allContentfulProgram {
+
+    allContentfulPartner(
+      filter: { id: { eq: "ecd6a28f-36c2-5596-a5f1-e03afa6e09ed" } }
+    ) {
+      edges {
+        node {
+          name
+          id
+          school {
+            title
+            program {
+              fullProgramName
+              slug
+              availableMethodsOfStudy
+            }
+          }
+        }
+      }
+    }
+
+    allContentfulProgram(
+      filter: {
+        partner: { id: { eq: "ecd6a28f-36c2-5596-a5f1-e03afa6e09ed" } }
+      }
+    ) {
       edges {
         node {
           fullProgramName
@@ -50,6 +91,9 @@ export const pageQuery = graphql`
             fluid(maxWidth: 350, maxHeight: 196, resizingBehavior: SCALE) {
               ...GatsbyContentfulFluid_withWebp_noBase64
             }
+          }
+          relatedSchoolCollege {
+            id
           }
         }
       }

@@ -1,12 +1,16 @@
 import React from 'react'
 import { Link } from 'gatsby'
-export default ({ program }) => (
-  <div>
-    <h3>
-      <Link to={`/program/${program.slug}`}>{program.fullProgramName}</Link>
-    </h3>
+export default ({ program }) => {
+  const slug = `/program/${program.slug}` || '/'
+  const { fullProgramName, availableMethodsOfStudy } = program
+  return (
+    <div>
+      <h3>
+        <Link to={slug}>{fullProgramName}</Link>
+      </h3>
 
-    {program.availableMethodsOfStudy &&
-      program.availableMethodsOfStudy.map(tag => <p key={tag}>{tag}</p>)}
-  </div>
-)
+      {availableMethodsOfStudy &&
+        availableMethodsOfStudy.map(tag => <p key={tag}>{tag}</p>)}
+    </div>
+  )
+}
