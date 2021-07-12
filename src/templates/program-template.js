@@ -125,9 +125,9 @@ const ProgramTemplate = ({ data, pageContext }) => {
     creditHours,
     monthsToComplete,
     programTracks,
+    thumbnail,
     typeOfDegree,
     whyMorganStateStats,
-    relatedSchoolCollege,
     programDetailUrl,
     preContentBlock,
     skillsAndJobs,
@@ -153,7 +153,7 @@ const ProgramTemplate = ({ data, pageContext }) => {
     carouselContent.map(item => ({
       id: item.id,
       title: item.title,
-      src: item.image,
+      src: item.image.fluid.src,
       description: item.description,
     }))
 
@@ -162,7 +162,7 @@ const ProgramTemplate = ({ data, pageContext }) => {
     relatedPrograms.map(item => ({
       id: item.id,
       title: item.fullProgramName,
-      src: item.heroImage,
+      src: item.thumbnail ? item.thumbnail.fixed.src : null,
       description: item.metaDescription
         ? item.metaDescription.metaDescription
         : null,
@@ -333,6 +333,11 @@ export const query = graphql`
       monthsToComplete
       programTracks
       programDetailUrl
+      thumbnail {
+        fixed {
+          src
+        }
+      }
       typeOfDegree
       whyMorganStateStats {
         title
@@ -384,6 +389,11 @@ export const query = graphql`
         fullProgramName
         id
         slug
+        thumbnail {
+          fixed {
+            src
+          }
+        }
         typeOfDegree
         metaDescription {
           metaDescription
