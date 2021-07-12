@@ -59,6 +59,9 @@ const RelatedPrograms = styled.div`
 const CareerDetails = styled.div`
   background: lightpink;
 `
+const PreContentBlock = styled.div`
+  background: plum;
+`
 const CarouselPreText = styled.div`
   background: grey;
 `
@@ -126,6 +129,7 @@ const ProgramTemplate = ({ data, pageContext }) => {
     whyMorganStateStats,
     relatedSchoolCollege,
     programDetailUrl,
+    preContentBlock,
     skillsAndJobs,
     careerDetails,
     carouselPreText,
@@ -223,24 +227,25 @@ const ProgramTemplate = ({ data, pageContext }) => {
                 ))}
             </CardList>
           </WhyMorganState>
-          <h2>Move Forward in Your Professional Career</h2>
-          <p>
-            Lorem ipsum dolor sit amet eiusmod imperdiet libero incididunt eget
-            volutpat aenean curabitur iaculis. Tristique faucibus condimentum
-            sodales posuere luctus laoreet congue. Condimentum vel libero
-            interdum quisque pharetra sed proin netus venenatis pretium molestie
-            ac libero. Rhoncus nibh dapibus fringilla consequat eros lacinia
-            vulputate eu. Nec dui urna rhoncus tempor phasellus elementum lectus
-            nec posuere quam vel egestas.
-          </p>
-          <SkillsAndJobs>
-            {/* <h2>Learn In Demand Skills</h2> */}
-            {skillsAndJobs &&
-              documentToReactComponents(skillsAndJobs.json, RICHTEXT_OPTIONS)}
-          </SkillsAndJobs>
+
+          {preContentBlock && (
+            <PreContentBlock>
+              {documentToReactComponents(
+                preContentBlock.json,
+                RICHTEXT_OPTIONS
+              )}
+            </PreContentBlock>
+          )}
+          {skillsAndJobs && (
+            <SkillsAndJobs>
+              {/* <h2>Content block 1</h2> */}
+              {documentToReactComponents(skillsAndJobs.json, RICHTEXT_OPTIONS)}
+            </SkillsAndJobs>
+          )}
+
           {careerDetails && (
             <CareerDetails>
-              {/* <h2>Get the job you want</h2> */}
+              {/* <h2>Content block 2</h2> */}
               {documentToReactComponents(careerDetails.json, RICHTEXT_OPTIONS)}
             </CareerDetails>
           )}
@@ -334,6 +339,9 @@ export const query = graphql`
       }
       programDetailUrl
       skillsAndJobs {
+        json
+      }
+      preContentBlock {
         json
       }
       careerDetails {
