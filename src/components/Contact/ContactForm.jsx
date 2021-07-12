@@ -77,13 +77,16 @@ const phoneNumberMask = [
   /\d/,
   /\d/,
 ]
+
+// encoding required for netlify to correctly capture data
 const encode = data =>
   Object.keys(data)
     .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
     .join('&')
 
 const ContactForm = props => {
-  const { campaign } = props
+  const { campaign, program, sendToUrl } = props
+  console.log('program', program)
   return (
     <Formik
       initialValues={{
@@ -104,9 +107,11 @@ const ContactForm = props => {
       })}
       onSubmit={(values, actions) => {
         actions.setFieldValue(values.Campaign, campaign)
+        actions.setFieldValue(values.Program, program)
         const payload = {
           ...values,
           Campaign: campaign,
+          Program: program,
         } // Construct the new payload
         actions.setValues(payload)
         // console.log('payloadpayloadpayload', payload);
@@ -144,12 +149,13 @@ const ContactForm = props => {
         <Form name="unlv-contact" className="form" data-netlify>
           <input type="hidden" name="form-name" value="unlv-contact" />
           <input type="hidden" name="Campaign" value={campaign} />
-          <input type="hidden" name="Birth date" />
+          <input type="hidden" name="Program" value={program} />
+          {/* <input type="hidden" name="Birth date" /> */}
           {!values.success && (
             <div className="form-fields">
               <div className="contact-header">
-                <h1>Learn More About Degree Options and Financial Aid </h1>
-                <p>Share your information and we’ll be in touch soon.</p>
+                <h1>Request Information</h1>
+                <p>{program}</p>
               </div>
               <TextInput
                 label="First Name"
@@ -179,7 +185,7 @@ const ContactForm = props => {
                 placeholder="Email Address"
                 error={touched.Email && errors.Email}
               />
-              <div className="gradyear-question">
+              {/* <div className="gradyear-question">
                 <label htmlFor="gradYear">High School Graduation Year</label>
                 <div className="grad-select">
                   <MultiSelect
@@ -197,8 +203,8 @@ const ContactForm = props => {
                     <option value="2024">2024</option>
                   </MultiSelect>
                 </div>
-              </div>
-              <label htmlFor="Home Phone">
+              </div> */}
+              {/* <label htmlFor="Home Phone">
                 Phone Number
                 <MaskedInput
                   label="Phone Number"
@@ -213,7 +219,7 @@ const ContactForm = props => {
                   onBlur={handleBlur}
                   autocomplete="autocomplete_off_hack_xfr4!k"
                 />
-              </label>
+              </label> */}
               {/* <TextInput
                 label="Phone Number"
                 id="phoneNumber"
@@ -224,7 +230,7 @@ const ContactForm = props => {
                 placeholder="Phone Number"
                 error={touched['Home Phone'] && errors['Home Phone']}
               /> */}
-              <div className="dob-question">
+              {/* <div className="dob-question">
                 <label>Date of Birth</label>
                 <div className="dob-selects">
                   <MultiSelect
@@ -323,7 +329,7 @@ const ContactForm = props => {
                     <option value="2007">2007</option>
                   </MultiSelect>
                 </div>
-              </div>
+              </div> */}
               {/* <Debug /> */}
               <Center className="type-button">
                 <Button secondary type="submit" disabled={isSubmitting}>
@@ -338,6 +344,11 @@ const ContactForm = props => {
                 <h4>
                   Thank you for submitting your infomation! We will be in touch
                   with you soon!
+                  <Button>
+                    <a href={sendToUrl ? sendToUrl : 'https://www.morgan.edu'}>
+                      See Program Details
+                    </a>
+                  </Button>
                 </h4>
               </Center>
             </InputField>

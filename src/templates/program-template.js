@@ -18,6 +18,7 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { BLOCKS, INLINES } from '@contentful/rich-text-types'
 import StatCard from '../components/StatCard'
 import { Button } from '@theme-ui/components'
+import ContactForm from '../components/Contact/ContactForm'
 
 const carouselSettings = {
   dot: true,
@@ -289,6 +290,11 @@ const ProgramTemplate = ({ data, pageContext }) => {
             </h3>
             <p>Lorem ipsum dolor sit amet ac urna ullamcorper nisi.</p>
             <Button>Request Information</Button>
+            <ContactForm
+              campaign="eab"
+              program={`${typeOfDegree} in ${fullProgramName}`}
+              sendToUrl={programDetailUrl}
+            />
           </DiscoverProgramCTA>
           {normalizedRelated && (
             <RelatedPrograms>
@@ -326,6 +332,7 @@ export const query = graphql`
       creditHours
       monthsToComplete
       programTracks
+      programDetailUrl
       typeOfDegree
       whyMorganStateStats {
         title
